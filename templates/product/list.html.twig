@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+    {% if Product %}
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Product details</div>
+        <div class="card-body">
+            <h4 class="card-title">{{ Product.catalogue }}</h4>
+            <p class="card-text">{{ Product.price }} TND </p>
+        </div>
+    </div>
+        {% else %}
+            {% if isDeleted is defined %}
+                {% if isDeleted %}
+            <div class="alert alert-dismissible alert-primary">
+                <i class="fas fa-times"></i>
+                <strong>Success !</strong> product deleted.
+            </div>
+                {% else %}
+                    <div class="alert alert-dismissible alert-secondary">
+                        <i class="fas fa-times"></i>
+                        <strong>Error !</strong> This product does not exist.
+                    </div>
+           {% endif %}
+            {% else %}
+                <div class="alert alert-dismissible alert-secondary">
+                    <i class="fas fa-times"></i>
+                    <strong>Error !</strong> This product does not exist.
+                </div>
+    {% endif %}
+    {% endif %}
+    </div>
+{% endblock %}
+
+{% block title %}
+    Product details
+{% endblock %}
+
