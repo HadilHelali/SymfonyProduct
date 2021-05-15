@@ -1,10 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-
+{{ Product.catalogue }} details
 {% endblock %}
 
 {% block body %}
+<div class="container">
+    <div class="card border-info" style="width: border-box; height: auto; text-align: center;">
+        <div class="card-header">Product Details</div>
+        <div class="card-body">
+            <h4 class="card-title">{{ Product.catalogue }}</h4>
+            <p class="card-text"><strong>{{ Product.price }} TND </strong><br/>
+            Trgej erfjgn efkfdf efgzljn efrgkjen zfzln erlkfer erggegkn zeflegn erglead zlgkeg </p>
 
+        </div>
+    </div>
+</div>
 {% endblock %}
 

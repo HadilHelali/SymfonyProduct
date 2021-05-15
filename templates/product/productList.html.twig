@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of Products{% endblock %}
+
+{% block body %}
+
+<div class="container" style="width: 1500px ;" >
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-secondary">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for Product in Products %}
+        {% if Product %}
+    <div class="card border-primary mb-3" style="display: inline-block; width: 250px; text-align: center; margin:10px ">
+        <div class="card-header">Product details</div>
+        <div class="card-body">
+            <h4 class="card-title">{{ Product.catalogue }}</h4>
+            <p class="card-text">{{ Product.price }} TND </p>
+            <i class="fas fa-info-circle"></i>  <a href="/detail/{{ Product.id }}" class="card-link"> Details  </a>
+            <i class="fas fa-trash-alt"></i><a href="/delete/{{ Product.id }}" class="card-link">  Delete  </a>
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-dismissible alert-secondary">
+            <i class="fas fa-times"></i>
+             The list of products is empty.
+        </div>
+        {% endif %}
+    {% endfor %}
+
+
+
+    <div class="container" >
+        <ul class="pagination pagination-lg" style="align-self: center; width: 250px; text-align: center; margin-left:30%">
+
+            {% if Page == 1 %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item ">
+                <a class="page-link" href="/product/{{ Page-1 }}/{{ Number }}">&laquo;</a>
+            </li>
+            {% endif %}
+            {% for page in 1..5 %}
+            {% if page == Page %}
+            <li class="page-item active">
+                <a class="page-link" href="/product/{{ page }}/{{ Number }}">{{ page }}</a>
+            </li>
+           {% else %}
+            <li class="page-item ">
+                <a class="page-link" href="/product/{{ page }}/{{ Number }}">{{ page }}</a>
+            </li>
+         {% endif %}
+            {% endfor %}
+            {% if Page == 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item ">
+                    <a class="page-link" href="/product/{{ Page+1 }}/{{ Number }}">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    {% endblock %}
