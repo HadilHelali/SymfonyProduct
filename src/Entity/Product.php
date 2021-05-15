@@ -93,4 +93,9 @@ class Product
 
         return $this;
     }
+
+    public function _toString ()
+    {
+        return $this->catalogue;
+    }
 }

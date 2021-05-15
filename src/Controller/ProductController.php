@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\ProductType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,8 +29,9 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/add/{catalogue}/{price<\d+>}', name: "ProductAdd")]
-    public function addProduct($catalogue, $price, EntityManagerInterface $manager): Response
+   // #[Route('/add/{catalogue}/{price<\d+>}', name: "ProductAdd")]
+    #[Route('/add/{product?0}', name: "ProductAdd")]
+    public function addProduct(/* $catalogue, $price ,*/EntityManagerInterface $manager,Request  $request, Product $product = null): Response
     {
         // 1st Method : To get the EntityManager :
         //   $Manager = $this->getDoctrine()->getManager() ;
@@ -37,17 +40,34 @@ class ProductController extends AbstractController
         // EntityManagerInterface $manager : utilise l'injection de dépendance
 
         // then create the objet :
-        $Product = new Product();
+        /* $Product = new Product();
         $Product->setCatalogue($catalogue);
-        $Product->setPrice($price);
+        $Product->setPrice($price);*/
 
-        // then persist the new product : (add it)
+        // Using the form :
+        // create a product :
+        if(!$product) {
+            $product = new Product();
+        }
+        // create the form :
+        $form = $this->createForm(ProductType::class, $product);
+     /*   // then persist the new product : (add it)
         $manager->persist($Product);
         // then excute the request :
         $manager->flush();
-        $this->addFlash('success', "The product ".$Product->getCatalogue()." was added successfully");
-        // direct to the page of the product details
-        return $this->redirectToRoute("product");
+        $this->addFlash('success', "The product ".$Product->getCatalogue()." was added successfully"); */
+      /*  // direct to the page of the product details
+        return $this->redirectToRoute("product"); */
+        $form->handleRequest($request); // gérer la requete
+        if($form->isSubmitted()) { // b3athna el form wela la
+            $manager->persist($product);
+            $manager->flush();
+            $this->addFlash('success', "le produit ".$product->getCatalogue()." a été ajouté avec succès");
+            return $this->redirectToRoute('product');
+        }
+        return $this->render('product/formAdd.html.twig', [
+           'form'=> $form->createView()
+        ]);
 
     }
 

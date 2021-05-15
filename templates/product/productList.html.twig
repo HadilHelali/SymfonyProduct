@@ -2,6 +2,9 @@
 
 {% block title %}List of Products{% endblock %}
 
+{% block AddProduct %}
+    <a class="nav-link" href="{{ path('ProductAdd') }}"><i class="fas fa-cart-plus"></i>  Add Product</a>
+{% endblock %}
 {% block body %}
 
 <div class="container" style="width: 1500px ;" >

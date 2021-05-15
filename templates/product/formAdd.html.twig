@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+AddProduct
+{% endblock %}
+
+  {% block Home %}
+      <a class="nav-link " href="{{ path('product') }}"><i class="fas fa-home"></i>  Home</a>
+          {% endblock %}
+
+ {% block AddProduct %}
+     <a class="nav-link active" href="{{ path('ProductAdd') }}"><i class="fas fa-cart-plus"></i>  Add Product</a>
+ {% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
